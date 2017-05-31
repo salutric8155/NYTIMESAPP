@@ -1,9 +1,4 @@
- $('#runSearch').on('click', function() {
 
-				var text = $('.searchTerm').value();
-				runQuery(10, text);
-
-			});
 				// SETUP VARIABLES
 				// ==========================================================
 
@@ -17,9 +12,17 @@
 				var endYear = 0;
 
 				// Based on the queryTerm we will create a queryURL
-				var queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=";
+				//var queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=";
+					
+				$('#runSearch').on('click', function(evt) {
+                    evt.preventDefault();
+                    var text = $('.searchTerm').text();
+                var queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=";
+                runQuery(10, queryURLBase + text);
 
-
+                // Array to hold the various article info
+                var articleCounter = 0;
+            });
 				// Array to hold the various article info
 				var articleCounter = 0;
 
@@ -72,50 +75,4 @@
 						}
 					})
 			}
-        </script>
-<!--<script>
-$(document).ready(function(){
-	$('runSearch').on('click', function(){
-        console.log('click');
-       var query =  $('#searchTerm').text();
-		search(query);
-	});
-	function search(query) {
-		var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=e53026f02d1d419c8f54e0607df31f8d";
-
-		url = url + '&q=' + query;
-
-
-		$.ajax({
-			url: url,
-			method: 'GET',
-		}).done(function (result){
-			console.log(result);
-			for(var i=0; i<result.response.docs.length; i++)
-			{
-				split(result.response.docs[i], i);
-			}
-			console.log(result);
-		}).fail(function (err) {
-			throw err;
-		});
-
-	}
-
-
-	function split(result, index){
-		console.log(result);
-		var title;
-
-		//	var p = $('<p>').html(result.snippet);
-
-		var wellSection = $("<div>");
-		wellSection.text(result.snippet);
-		wellSection.addClass('well');
-		wellSection.attr('id', 'articleWell-' + index);
-		//	wellSection.append(title);
-		$('#wellSection').append(wellSection);
-
-
-	}
-})
+    
